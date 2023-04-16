@@ -10,9 +10,17 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-      # show_sql: true
+      #show_sql: true
       format_sql: true
+      highlight_sql: true
 
 logging.level:
   org.hibernate.SQL: debug
-# org.hibernate.type: trace
+  #org.hibernate.type: trace
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+      logging: slf4j
+      multiline: true
