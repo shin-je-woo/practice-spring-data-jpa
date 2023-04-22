@@ -11,6 +11,7 @@ import study.datajpa.entity.Team;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -142,5 +143,25 @@ class MemberRepositoryTest {
         for (Member member : result) {
             System.out.println("member = " + member);
         }
+    }
+
+    @Test
+    void returnType() {
+        Member member1 = new Member("memberA", 10);
+        Member member2 = new Member("memberB", 20);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        List<Member> empty = memberRepository.findListByUsername("qweqweqwe");
+        assertThat(empty.size()).isEqualTo(0); // Collection은 null이 아님이 보장된다. if(empty != null) 이런 코드 쓰지 말 것 !
+
+        Member findMember = memberRepository.findMemberByUsername("qweqweqwe");
+        assertThat(findMember).isNull(); // 단건은 null일 수 있다.
+        // JPA의 getSingleResult()에서 result가 없을 경우 NoResultException이 발생하는데, Spring-Data-Jpa에서는 이것을 null로 반환하도록 한다.
+
+        Optional<Member> optionalMember = memberRepository.findOptionalByUsername("qweqweqwe");
+        assertThat(optionalMember).isEqualTo(Optional.empty());
+        // 자바8 이후부터는 Optional의 등장으로 처리가 조금 더 편해졌다.
+
     }
 }
