@@ -10,13 +10,16 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-      #show_sql: true
-      format_sql: true
-      highlight_sql: true
+        #        show_sql: true
+        format_sql: true
+        highlight_sql: true
 
-logging.level:
-  org.hibernate.SQL: debug
-  #org.hibernate.type: trace
+logging:
+  level:
+    org.hibernate:
+      SQL: debug
+  #    type: trace
+
 
 decorator:
   datasource:
